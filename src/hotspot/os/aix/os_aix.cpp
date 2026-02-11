@@ -2155,23 +2155,14 @@ void os::init(void) {
       //
       // In this case it would be smart to allocate the java heap with 64K
       // to get the performance benefit, and to fake 64k pages for the
-      // data segment (when dealing with thread stacks).
-      //
-      // However, leave a possibility to downgrade to 4K, using
-      // -XX:-Use64KPages.
-      if (Use64KPages) {
-        trcVerbose("64K page mode (faked for data segment)");
-        set_page_size(64*K);
-      } else {
-        trcVerbose("4K page mode (Use64KPages=off)");
-        set_page_size(4*K);
-      }
+      // data segment (when dealing with thread stacks)
+      trcVerbose("64K page mode (faked for data segment)");
+      set_page_size(64*K);
     } else {
       // .. and not able to allocate 64k pages dynamically. Here, just
       // fall back to 4K paged mode and use mmap for everything.
       trcVerbose("4K page mode");
       set_page_size(4*K);
-      FLAG_SET_ERGO(Use64KPages, false);
     }
   } else {
     // datapsize = 64k. Data segment, thread stacks are 64k paged.
@@ -2181,7 +2172,6 @@ void os::init(void) {
     assert0(g_multipage_support.can_use_64K_pages || g_multipage_support.can_use_64K_mmap_pages);
     set_page_size(64*K);
     trcVerbose("64K page mode");
-    FLAG_SET_ERGO(Use64KPages, true);
   }
 
   // For now UseLargePages is just ignored.
