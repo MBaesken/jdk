@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2005, 2024, Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2012, 2024 SAP SE. All rights reserved.
+ * Copyright (c) 2005, 2026, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2026 SAP SE. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -60,10 +60,6 @@
   /* Use optimized addresses for the polling page.                             */   \
   product(bool, OptimizePollingPageLocation, true, DIAGNOSTIC,                      \
              "Optimize the location of the polling page used for Safepoints")       \
-                                                                                    \
-  /* Use 64K pages for virtual memory (shmat). */                                   \
-  product(bool, Use64KPages, true, DIAGNOSTIC,                                      \
-          "Use 64K pages if available.")                                            \
                                                                                     \
   /* Normally AIX commits memory on touch, but sometimes it is helpful to have */   \
   /* explicit commit behaviour. This flag, if true, causes the VM to touch     */   \
