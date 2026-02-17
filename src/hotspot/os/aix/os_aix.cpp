@@ -2143,11 +2143,6 @@ void os::init(void) {
   // 64k          no              --- AIX 5.2 ? ---
   // 64k          yes                                              64k                             new systems and standard java loader (we set datapsize=64k when linking)
 
-  // We explicitly leave no option to change page size, because only upgrading would work,
-  // not downgrading (if stack page size is 64k you cannot pretend its 4k).
-
-  guarantee(g_multipage_support.datapsize == 64*K, "the only supported page size");
-
   // datapsize = 64k. Data segment, thread stacks are 64k paged.
   // This normally means that we can allocate 64k pages dynamically.
   // (There is one special case where this may be false: EXTSHM=on.
