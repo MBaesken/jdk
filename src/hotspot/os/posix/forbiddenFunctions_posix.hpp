@@ -42,8 +42,12 @@
 FORBID_IMPORTED_NORETURN_C_FUNCTION(void _exit(int), /* not noexcept */, "use os::exit")
 
 // we do not have the off64_t on Alpine
- #ifndef MUSL_LIBC
+#ifndef MUSL_LIBC
+#if defined(__APPLE__)
+FORBID_C_FUNCTION(ssize_t sendfile64(int, int, off_t*, size_t), noexcept, "don't use")
+#else
 FORBID_C_FUNCTION(ssize_t sendfile64(int, int, off64_t*, size_t), noexcept, "don't use")
+#endif
 
 // issues because of define on AIX
 // FORBID_C_FUNCTION(off64_t lseek64(int, off64_t, int), noexcept, "don't use")
