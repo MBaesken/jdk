@@ -82,7 +82,7 @@ class odmWrapper : private dynamicOdm {
 
   CLASS_SYMBOL odm_class() { return _odm_class; }
   bool has_class() { return odm_class() != (CLASS_SYMBOL)-1; }
-  int class_offset(const char *field, bool is_aix_5);
+  int class_offset(const char *field);
   char* data() { return _data; }
 
   char* retrieve_obj(const char* name = nullptr) {
