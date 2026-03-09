@@ -55,6 +55,9 @@ HGLRC sharedContext = 0;
 JNIEXPORT jboolean JNICALL
 Java_sun_java2d_opengl_WGLGraphicsConfig_initWGL(JNIEnv *env, jclass wglgc)
 {
+#ifdef HEADLESS
+    return JNI_FALSE;
+#else
     J2dRlsTraceLn(J2D_TRACE_INFO, "WGLGraphicsConfig_initWGL");
 
     if (!OGLFuncs_OpenLibrary()) {
@@ -69,6 +72,7 @@ Java_sun_java2d_opengl_WGLGraphicsConfig_initWGL(JNIEnv *env, jclass wglgc)
     }
 
     return JNI_TRUE;
+#endif
 }
 
 /**
@@ -77,6 +81,7 @@ Java_sun_java2d_opengl_WGLGraphicsConfig_initWGL(JNIEnv *env, jclass wglgc)
 static void
 WGLGC_DestroyOGLContext(OGLContext *oglc)
 {
+#ifndef HEADLESS
     WGLCtxInfo *ctxinfo;
 
     J2dTraceLn(J2D_TRACE_INFO, "WGLGC_DestroyOGLContext");
@@ -112,6 +117,7 @@ WGLGC_DestroyOGLContext(OGLContext *oglc)
     }
 
     free(oglc);
+#endif
 }
 
 /**
@@ -121,6 +127,7 @@ WGLGC_DestroyOGLContext(OGLContext *oglc)
 void
 OGLGC_DestroyOGLGraphicsConfig(jlong pConfigInfo)
 {
+#ifndef HEADLESS
     WGLGraphicsConfigInfo *wglinfo =
         (WGLGraphicsConfigInfo *)jlong_to_ptr(pConfigInfo);
 
@@ -137,6 +144,7 @@ OGLGC_DestroyOGLGraphicsConfig(jlong pConfigInfo)
     }
 
     free(wglinfo);
+#endif
 }
 
 /**
@@ -191,6 +199,9 @@ WGLGC_CreateScratchWindow(jint screennum)
 static int
 WGLGC_GetPixelFormatForDC(HDC hdc)
 {
+#ifdef HEADLESS
+    return 0;
+#else
     int attrs[] = {
         WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
         WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
@@ -268,6 +279,7 @@ WGLGC_GetPixelFormatForDC(HDC hdc)
                   "chose %d as the best pixel format", chosenPixFmt);
 
     return chosenPixFmt;
+#endif
 }
 
 /**
@@ -310,6 +322,9 @@ WGLGC_SetBasicPixelFormatForDC(HDC hdc)
 static HGLRC
 WGLGC_CreateContext(jint screennum, jint pixfmt)
 {
+#ifdef HEADLESS
+    return 0;
+#else
     PIXELFORMATDESCRIPTOR pfd;
     HWND hwnd;
     HDC hdc;
@@ -350,6 +365,7 @@ WGLGC_CreateContext(jint screennum, jint pixfmt)
     DestroyWindow(hwnd);
 
     return hglrc;
+#endif
 }
 
 /**
@@ -367,6 +383,9 @@ WGLGC_CreateContext(jint screennum, jint pixfmt)
 static jboolean
 WGLGC_InitExtFuncs(jint screennum)
 {
+#ifdef HEADLESS
+    return JNI_FALSE;
+#else
     HWND hwnd;
     HDC hdc;
     HGLRC context;
@@ -433,6 +452,7 @@ WGLGC_InitExtFuncs(jint screennum)
     DestroyWindow(hwnd);
 
     return JNI_TRUE;
+#endif
 }
 
 /**

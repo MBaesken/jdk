@@ -39,7 +39,7 @@
  * The methods in this file implement the native windowing system specific
  * layer (WGL) for the OpenGL-based Java 2D pipeline.
  */
-
+#ifndef HEADLESS
 extern LockFunc                     OGLSD_Lock;
 extern GetRasInfoFunc               OGLSD_GetRasInfo;
 extern UnlockFunc                   OGLSD_Unlock;
@@ -55,12 +55,14 @@ extern void AwtComponent_GetInsets(JNIEnv *env, jobject peer, RECT *insets);
 
 extern void
     OGLSD_SetNativeDimensions(JNIEnv *env, OGLSDOps *oglsdo, jint w, jint h);
+#endif
 
 JNIEXPORT void JNICALL
 Java_sun_java2d_opengl_WGLSurfaceData_initOps(JNIEnv *env, jobject wglsd,
                                               jobject gc, jlong pConfigInfo,
                                               jobject peer, jlong hwnd)
 {
+#ifndef HEADLESS
     gc = (*env)->NewGlobalRef(env, gc);
     if (gc == NULL) {
         JNU_ThrowOutOfMemoryError(env, "Initialization of SurfaceData failed.");
@@ -117,6 +119,7 @@ Java_sun_java2d_opengl_WGLSurfaceData_initOps(JNIEnv *env, jobject wglsd,
         free(wglsdo);
         JNU_ThrowNullPointerException(env, "Config info is null in initOps");
     }
+#endif
 }
 
 /**
@@ -138,6 +141,9 @@ OGLSD_DestroyOGLSurface(JNIEnv *env, OGLSDOps *oglsdo)
 static jboolean
 WGLSD_MakeCurrentToScratch(JNIEnv *env, OGLContext *oglc)
 {
+#ifdef HEADLESS
+    return JNI_FALSE;
+#else
     WGLCtxInfo *ctxInfo;
 
     J2dTraceLn(J2D_TRACE_INFO, "WGLSD_MakeCurrentToScratch");
@@ -156,6 +162,7 @@ WGLSD_MakeCurrentToScratch(JNIEnv *env, OGLContext *oglc)
     }
 
     return JNI_TRUE;
+#endif
 }
 
 /**
@@ -167,6 +174,9 @@ WGLSD_MakeCurrentToScratch(JNIEnv *env, OGLContext *oglc)
 OGLContext *
 OGLSD_SetScratchSurface(JNIEnv *env, jlong pConfigInfo)
 {
+#ifdef HEADLESS
+    return NULL;
+#else
     WGLGraphicsConfigInfo *wglInfo =
         (WGLGraphicsConfigInfo *)jlong_to_ptr(pConfigInfo);
     OGLContext *oglc;
@@ -192,6 +202,7 @@ OGLSD_SetScratchSurface(JNIEnv *env, jlong pConfigInfo)
     }
 
     return oglc;
+#endif
 }
 
 /**
@@ -203,6 +214,9 @@ OGLSD_SetScratchSurface(JNIEnv *env, jlong pConfigInfo)
 OGLContext *
 OGLSD_MakeOGLContextCurrent(JNIEnv *env, OGLSDOps *srcOps, OGLSDOps *dstOps)
 {
+#ifdef HEADLESS
+    return NULL;
+#else
     WGLSDOps *srcWGLOps = (WGLSDOps *)srcOps->privOps;
     WGLSDOps *dstWGLOps = (WGLSDOps *)dstOps->privOps;
     OGLContext *oglc;
@@ -284,6 +298,7 @@ OGLSD_MakeOGLContextCurrent(JNIEnv *env, OGLSDOps *srcOps, OGLSDOps *dstOps)
     ReleaseDC(dstWGLOps->window, dstHDC);
 
     return oglc;
+#endif
 }
 
 /**
@@ -294,6 +309,9 @@ OGLSD_MakeOGLContextCurrent(JNIEnv *env, OGLSDOps *srcOps, OGLSDOps *dstOps)
 jboolean
 OGLSD_InitOGLWindow(JNIEnv *env, OGLSDOps *oglsdo)
 {
+#ifdef HEADLESS
+    return JNI_FALSE;
+#else
     PIXELFORMATDESCRIPTOR pfd;
     WGLSDOps *wglsdo;
     WGLGraphicsConfigInfo *wglInfo;
@@ -358,6 +376,7 @@ OGLSD_InitOGLWindow(JNIEnv *env, OGLSDOps *oglsdo)
                oglsdo->width, oglsdo->height);
 
     return JNI_TRUE;
+#endif
 }
 
 void
@@ -408,6 +427,9 @@ JNIEXPORT jboolean JNICALL
     Java_sun_java2d_opengl_WGLSurfaceData_updateWindowAccelImpl
   (JNIEnv *env, jclass clazz, jlong pData, jobject peer, jint w, jint h)
 {
+#ifdef HEADLESS
+    return JNI_FALSE;
+#else
     OGLSDOps *oglsdo = (OGLSDOps *)jlong_to_ptr(pData);
     OGLPixelFormat pf = PixelFormats[0/*PF_INT_ARGB_PRE*/];
     HBITMAP hBitmap = NULL;
@@ -475,4 +497,5 @@ JNIEXPORT jboolean JNICALL
     // hBitmap is released in UpdateWindow
 
     return JNI_TRUE;
+#endif
 }
