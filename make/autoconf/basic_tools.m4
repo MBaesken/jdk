@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2011, 2026, Oracle and/or its affiliates. All rights reserved.
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 #
 # This code is free software; you can redistribute it and/or modify it
@@ -368,6 +368,10 @@ AC_DEFUN_ONCE([BASIC_SETUP_COMPLEX_TOOLS],
     AC_MSG_RESULT([yes])
     IS_GNU_DATE=yes
   else
+    # AIX date could be detected, but it is not compatible
+    if test "x$OPENJDK_TARGET_OS" = "xaix"; then
+      AC_MSG_ERROR([gnu date from AIX toolbox is required])
+    fi
     AC_MSG_RESULT([no])
     IS_GNU_DATE=no
   fi
