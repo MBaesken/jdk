@@ -369,7 +369,7 @@ AC_DEFUN_ONCE([BASIC_SETUP_COMPLEX_TOOLS],
     IS_GNU_DATE=yes
   else
     AC_MSG_RESULT([no])
-    # AIX date could be detected, but it is not compatible
+    # Likely at the AIX provided version of the date utility here, which is not compatible
     if test "x$OPENJDK_TARGET_OS" = "xaix"; then
       AC_MSG_ERROR([gnu date from AIX toolbox is required])
     fi
