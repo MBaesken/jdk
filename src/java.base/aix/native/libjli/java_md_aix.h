@@ -37,12 +37,7 @@
  * in the hotspot implementation which is not available at this place, though.
  */
 
-typedef struct {
-  const char *dli_fname; /* file path of loaded library */
-  void *dli_fbase;       /* unsupported */
-  const char *dli_sname; /* unsupported */
-  void *dli_saddr;       /* unsupported */
-} Dl_info;
+#include "dl_info.h"
 
 int dladdr(void *addr, Dl_info *info);
 

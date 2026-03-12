@@ -47,6 +47,7 @@ JVM_CFLAGS_INCLUDES += \
     $(patsubst %,-I%,$(JVM_SRC_DIRS)) \
     -I$(TOPDIR)/src/hotspot/share/include \
     -I$(TOPDIR)/src/hotspot/os/$(HOTSPOT_TARGET_OS_TYPE)/include \
+    -I$(TOPDIR)/src/java.base/$(HOTSPOT_TARGET_OS)/native/include \
     -I$(SUPPORT_OUTPUTDIR)/modules_include/java.base \
     -I$(SUPPORT_OUTPUTDIR)/modules_include/java.base/$(OPENJDK_TARGET_OS_INCLUDE_SUBDIR) \
     -I$(TOPDIR)/src/java.base/share/native/libjimage \

@@ -48,15 +48,14 @@ static int dladdr_dont_reload(void* addr, Dl_info* info) {
     if (addr >= p->ldinfo_textorg &&
         (char*)addr < (char*)(p->ldinfo_textorg) + p->ldinfo_textsize) {
       info->dli_fname = p->ldinfo_filename;
-      info->dli_fbase = p->ldinfo_textorg;
-      return 1; /* [sic] */
+      return 1;
     }
     if (!p->ldinfo_next) {
       break;
     }
     p = (struct ld_info*)(((char*)p) + p->ldinfo_next);
   }
-  return 0; /* [sic] */
+  return 0;
 }
 
 #ifdef __cplusplus
@@ -69,14 +68,14 @@ int dladdr(void *addr, Dl_info *info) {
     loaded = 1;
   }
   if (!addr) {
-    return 0;  /* [sic] */
+    return 0;
   }
   /* Address could be AIX function descriptor? */
   void* const addr0 = *( (void**) addr );
   int rc = dladdr_dont_reload(addr, info);
   if (rc == 0) {
     rc = dladdr_dont_reload(addr0, info);
-    if (rc == 0) { /* [sic] */
+    if (rc == 0) {
       fill_dll_info(); /* refill, maybe loadquery info is outdated */
       rc = dladdr_dont_reload(addr, info);
       if (rc == 0) {
