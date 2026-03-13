@@ -35,9 +35,14 @@ include ProcessMarkdown.gmk
 include $(TOPDIR)/make/ToolsJdk.gmk
 
 LAUNCHER_SRC := $(TOPDIR)/src/java.base/share/native/launcher
+
+ifeq ($(call isTargetOs, aix), true)
+  ADD_PLATFORM_INCLUDE_DIR := -I$(TOPDIR)/src/java.base/aix/native/include
+endif
+
 LAUNCHER_CFLAGS += -I$(TOPDIR)/src/java.base/share/native/launcher \
     -I$(TOPDIR)/src/java.base/share/native/libjli \
-    -I$(TOPDIR)/src/java.base/$(OPENJDK_TARGET_OS)/native/include \
+    $(ADD_PLATFORM_INCLUDE_DIR) \
     -I$(TOPDIR)/src/java.base/$(OPENJDK_TARGET_OS_TYPE)/native/libjli \
     -I$(TOPDIR)/src/java.base/$(OPENJDK_TARGET_OS)/native/libjli \
     #
