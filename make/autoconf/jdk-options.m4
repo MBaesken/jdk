@@ -102,7 +102,7 @@ AC_DEFUN_ONCE([JDKOPT_SETUP_JDK_OPTIONS],
       CHECKING_MSG: [if we should build headless-only (no GUI)])
   AC_SUBST(ENABLE_HEADLESS_ONLY)
 
-  # avoid headless-only on macOS and Windows, it is not supported there
+  # Avoid headless-only on macOS and Windows, it is not supported there
   if test "x$ENABLE_HEADLESS_ONLY" = xtrue; then
     if test "x$OPENJDK_TARGET_OS" = xwindows || test "x$OPENJDK_TARGET_OS" = xmacosx; then
       AC_MSG_ERROR([headless-only is not supported on macOS and Windows])
