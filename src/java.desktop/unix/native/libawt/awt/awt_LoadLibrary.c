@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2000, 2025, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2000, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,7 +36,12 @@
 #include <sys/utsname.h>
 
 #ifdef AIX
-#include "porting_aix.h" /* For the 'dladdr' function. */
+#include "dl_info.h"
+
+JNIEXPORT int JVM_dladdr(void *addr, Dl_info *info);
+
+#define dladdr JVM_dladdr
+
 #endif
 
 #ifdef DEBUG

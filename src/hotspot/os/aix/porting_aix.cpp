@@ -426,6 +426,10 @@ int dladdr(void* addr, Dl_info* info) {
 
 }
 
+int JVM_dladdr(void *addr, Dl_info *info) {
+  return dladdr(addr, info);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Native callstack dumping
 

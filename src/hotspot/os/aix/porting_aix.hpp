@@ -45,6 +45,12 @@ extern "C"
 #endif
 int dladdr(void *addr, Dl_info *info);
 
+// Note: we export this to use it inside awt coding
+#ifdef __cplusplus
+extern "C"
+#endif
+JNIEXPORT int JVM_dladdr(void *addr, Dl_info *info);
+
 struct tbtable;
 
 class AixSymbols {
