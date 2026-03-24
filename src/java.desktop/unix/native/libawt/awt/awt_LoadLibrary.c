@@ -36,12 +36,7 @@
 #include <sys/utsname.h>
 
 #ifdef AIX
-#include "dl_info.h"
-
-JNIEXPORT int JVM_dladdr(void *addr, Dl_info *info);
-
 #define dladdr JVM_dladdr
-
 #endif
 
 #ifdef DEBUG
