@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2024 SAP SE. All rights reserved.
+ * Copyright (c) 2012, 2026 SAP SE. All rights reserved.
  * Copyright (c) 2025, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -426,7 +426,7 @@ int dladdr(void* addr, Dl_info* info) {
 
 }
 
-int JVM_dladdr(void *addr, Dl_info *info) {
+int JVM_dladdr(void* addr, Dl_info* info) {
   return dladdr(addr, info);
 }
 

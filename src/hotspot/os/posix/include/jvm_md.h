@@ -67,9 +67,12 @@
 #include "dl_info.h"
 
 #ifdef __cplusplus
-extern "C"
+extern "C" {
 #endif
-JNIEXPORT int JVM_dladdr(void *addr, Dl_info *info);
+JNIEXPORT int JVM_dladdr(void* addr, Dl_info* info);
+#ifdef __cplusplus
+}
+#endif
 #endif
 
 /*
