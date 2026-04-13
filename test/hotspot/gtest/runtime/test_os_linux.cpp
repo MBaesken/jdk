@@ -401,9 +401,7 @@ TEST_VM(os_linux, decoder_get_source_info_valid) {
   int line = -1;
   address valid_function_pointer = (address)ReportJNIFatalError;
   ASSERT_TRUE(Decoder::get_source_info(valid_function_pointer, buf, sizeof(buf), &line));
-#if !defined(USE_FUNCTION_SECTIONS)
   EXPECT_STREQ(buf, "jniCheck.hpp");
-#endif
   ASSERT_TRUE(line > 0);
 }
 

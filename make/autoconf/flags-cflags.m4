@@ -546,9 +546,9 @@ AC_DEFUN([FLAGS_SETUP_CFLAGS_HELPER],
     # reduce lib size on linux in link step, this needs also special compile flags
     # do this on s390x also for libjvm (where serviceability agent is not supported)
     if test "x$ENABLE_LINKTIME_GC" = xtrue; then
-      TOOLCHAIN_CFLAGS_JDK="$TOOLCHAIN_CFLAGS_JDK -ffunction-sections -DUSE_FUNCTION_SECTIONS -fdata-sections"
+      TOOLCHAIN_CFLAGS_JDK="$TOOLCHAIN_CFLAGS_JDK -ffunction-sections -fdata-sections"
       if test "x$OPENJDK_TARGET_CPU" = xs390x && test "x$DEBUG_LEVEL" == xrelease; then
-        TOOLCHAIN_CFLAGS_JVM="$TOOLCHAIN_CFLAGS_JVM -ffunction-sections -DUSE_FUNCTION_SECTIONS -fdata-sections"
+        TOOLCHAIN_CFLAGS_JVM="$TOOLCHAIN_CFLAGS_JVM -ffunction-sections -fdata-sections"
       fi
     fi
     # technically NOT for CXX (but since this gives *worse* performance, use
@@ -579,8 +579,8 @@ AC_DEFUN([FLAGS_SETUP_CFLAGS_HELPER],
     fi
 
     if test "x$ENABLE_LINKTIME_GC" = xtrue; then
-      TOOLCHAIN_CFLAGS_JDK="$TOOLCHAIN_CFLAGS_JDK -ffunction-sections -DUSE_FUNCTION_SECTIONS -fdata-sections"
-      TOOLCHAIN_CFLAGS_JVM="$TOOLCHAIN_CFLAGS_JVM -ffunction-sections -DUSE_FUNCTION_SECTIONS -fdata-sections"
+      TOOLCHAIN_CFLAGS_JDK="$TOOLCHAIN_CFLAGS_JDK -ffunction-sections -fdata-sections"
+      TOOLCHAIN_CFLAGS_JVM="$TOOLCHAIN_CFLAGS_JVM -ffunction-sections -fdata-sections"
     fi
 
     if test "x$OPENJDK_TARGET_OS" = xaix; then
