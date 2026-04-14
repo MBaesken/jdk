@@ -45,6 +45,7 @@ else
   GTEST_COPY_DEBUG_SYMBOLS := false
 endif
 
+GTEST_LIBJVM_CFLAGS := $(JVM_CFLAGS)
 ifeq ($(ENABLE_LINKTIME_GC), true)
   ifeq ($(TOOLCHAIN_TYPE), gcc)
     GTEST_LIBJVM_CFLAGS := $(filter-out -ffunction-sections -fdata-sections, $(JVM_CFLAGS))
