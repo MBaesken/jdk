@@ -371,7 +371,6 @@ ifneq ($(filter $(TOOLCHAIN_TYPE), gcc clang), )
   # particular files anyway, so lower optimization level.
   BUILD_LIBFONTMANAGER_hb-subset.cc_OPTIMIZATION := SIZE
   BUILD_LIBFONTMANAGER_hb-subset-plan.cc_OPTIMIZATION := SIZE
-  LIBFONTMANAGER_CXXFLAGS := -fno-rtti -fno-exceptions
 endif
 
 ifeq ($(call isTargetOs, windows), true)
@@ -395,7 +394,9 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBFONTMANAGER, \
     EXCLUDE_FILES := $(LIBFONTMANAGER_EXCLUDE_FILES) \
         AccelGlyphCache.c, \
     CFLAGS := $(LIBFONTMANAGER_CFLAGS), \
-    CXXFLAGS := $(LIBFONTMANAGER_CFLAGS) $(LIBFONTMANAGER_CXXFLAGS), \
+    CXXFLAGS := $(LIBFONTMANAGER_CFLAGS), \
+    CXXFLAGS_gcc := -fno-rtti -fno-exceptions, \
+    CXXFLAGS_clang := -fno-rtti -fno-exceptions, \
     OPTIMIZATION := HIGHEST, \
     CFLAGS_windows = -DCC_NOEX, \
     EXTRA_HEADER_DIRS := $(LIBFONTMANAGER_EXTRA_HEADER_DIRS), \
