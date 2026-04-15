@@ -328,10 +328,12 @@ static void addIdentitiesToKeystore(JNIEnv *env, jobject keyStore, jmethodID jm_
             for (i = 0; i < certCount; i++) {
                 CSSM_DATA currCertData;
 
-                if (i == 0)
+                if (i == 0) {
                     currCertRef = certificate;
-                else
+                } else {
                     currCertRef = (SecCertificateRef)CFArrayGetValueAtIndex(certChain, i);
+                    CFRetain(currCertRef);
+                }
 
                 bzero(&currCertData, sizeof(CSSM_DATA));
                 err = SecCertificateGetData(currCertRef, &currCertData);
