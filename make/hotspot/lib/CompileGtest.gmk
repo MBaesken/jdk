@@ -46,6 +46,8 @@ else
 endif
 
 GTEST_LIBJVM_CFLAGS := $(JVM_CFLAGS)
+# Decoder does not work with debuginfo of the gtest libjvm when sections are used,
+# so we get wrong file names. That's why we filter out the section flags.
 ifeq ($(ENABLE_LINKTIME_GC), true)
   ifeq ($(TOOLCHAIN_TYPE), gcc)
     GTEST_LIBJVM_CFLAGS := $(filter-out -ffunction-sections -fdata-sections, $(JVM_CFLAGS))
