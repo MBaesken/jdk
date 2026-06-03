@@ -2690,30 +2690,11 @@ bool os::Linux::print_numa_info(outputStream* st) {
     return false;
   }
 
-  char *p = buf;
-  int low_node_number  = INT_MAX;
-  int high_node_number = INT_MIN;
-  while (*p != '\0') {
-    int a, b;
-    if (sscanf(p, "%d", &a) != 1) break;
-    b = a;
-    while (isdigit((unsigned char)*p)) p++;
-    if (*p == '-') {
-      p++;
-      if (sscanf(p, "%d", &b) != 1) break;
-      while (isdigit((unsigned char)*p)) p++;
-    }
-    if (a < low_node_number) low_node_number = a;
-    if (b > high_node_number) high_node_number = b;
-    if (*p == ',') p++; else break;
-  }
-
-  struct dirent* e;
   bool first = true;
   int node_count = 0;
 
   // in case of node 0,2,5 gaps are still iterated
-  for (int node = low_node_number; node <= high_node_number; node++) {
+  for (int node: *nindex_to_node()) {
     char nodepath[256];
     os::snprintf_checked(nodepath, sizeof(nodepath), SYS_DEVICES_NODE "/node%d", node);
     DIR* currd = os::opendir(nodepath);
