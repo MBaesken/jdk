@@ -2684,7 +2684,7 @@ bool os::Linux::print_numa_info(outputStream* st) {
 
   char buf[1024];
   if (read_sysfs_file("/sys/devices/system/node/online", buf, sizeof(buf)) > 0) {
-    st->print_cr("online nodes : %s", buf);
+    st->print_cr("NUMA nodes online: %s", buf);
   } else {
     os::closedir(dirp);
     return false;
