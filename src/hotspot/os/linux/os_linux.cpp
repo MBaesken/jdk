@@ -2682,17 +2682,47 @@ bool os::Linux::print_numa_info(outputStream* st) {
     return false;
   }
 
+  char buf[1024];
+  if (read_sysfs_file("/sys/devices/system/node/online", buf, sizeof(buf)) > 0) {
+    st->print_cr("online nodes : %s", buf);
+  } else {
+    os::closedir(dirp);
+    return false;
+  }
+
+  char *p = buf;
+  int low_node_number  = INT_MAX;
+  int high_node_number = INT_MIN;
+  while (*p) {
+    int a, b;
+    if (sscanf(p, "%d", &a) != 1) break;
+    b = a;
+    while (isdigit((unsigned char)*p)) p++;
+    if (*p == '-') {
+      p++;
+      if (sscanf(p, "%d", &b) != 1) break;
+      while (isdigit((unsigned char)*p)) p++;
+    }
+    if (a < low_node_number) low_node_number = a;
+    if (b > high_node_number) high_node_number = b;
+    if (*p == ',') p++; else break;
+  }
+
   struct dirent* e;
   bool first = true;
   int node_count = 0;
 
-  while ((e = os::readdir(dirp)) != nullptr) {
-    if (strncmp(e->d_name, "node", 4) != 0 || !isdigit((unsigned char)e->d_name[4])) continue;
-    int node = atoi(e->d_name + 4);
+  for (int node = low_node_number; node <= high_node_number; node++) {
+    char nodepath[256];
+    os::snprintf_checked(nodepath, sizeof(nodepath), SYS_DEVICES_NODE "/node%d", node);
+    DIR* currd = os::opendir(nodepath);
+    if (currd == nullptr) continue;
     if (first) {
       st->cr();
       first = false;
     }
+    os::closedir(currd);
+
     st->print_cr("NUMA node %d", node);
     StreamIndentor si(st);
     print_numa_cpu_list(st, node);
