@@ -2693,7 +2693,7 @@ bool os::Linux::print_numa_info(outputStream* st) {
   char *p = buf;
   int low_node_number  = INT_MAX;
   int high_node_number = INT_MIN;
-  while (*p) {
+  while (*p != '\0') {
     int a, b;
     if (sscanf(p, "%d", &a) != 1) break;
     b = a;
@@ -2712,6 +2712,7 @@ bool os::Linux::print_numa_info(outputStream* st) {
   bool first = true;
   int node_count = 0;
 
+  // in case of node 0,2,5 gaps are still iterated
   for (int node = low_node_number; node <= high_node_number; node++) {
     char nodepath[256];
     os::snprintf_checked(nodepath, sizeof(nodepath), SYS_DEVICES_NODE "/node%d", node);
