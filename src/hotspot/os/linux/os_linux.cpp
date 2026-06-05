@@ -2628,7 +2628,7 @@ bool os::Linux::print_container_info(outputStream* st) {
 
 #define SYS_DEVICES_NODE "/sys/devices/system/node"
 
-static size_t read_sysfs_file(const char *path, char *buf, size_t sz) {
+static size_t read_sysfs_file(const char* path, char* buf, size_t sz) {
   FILE* f = os::fopen(path, "r");
   if (f == nullptr) return 0;
   size_t n = fread(buf, 1, sz - 1, f);
@@ -2677,23 +2677,20 @@ bool os::Linux::print_numa_info(outputStream* st) {
     return false;
   }
 
-  DIR* dirp = os::opendir(SYS_DEVICES_NODE);
-  if (dirp == nullptr) {
-    return false;
-  }
-
   char buf[1024];
   if (read_sysfs_file("/sys/devices/system/node/online", buf, sizeof(buf)) > 0) {
     st->print_cr("NUMA nodes online: %s", buf);
   } else {
-    os::closedir(dirp);
     return false;
   }
 
   bool first = true;
   int node_count = 0;
 
-  // in case of node 0,2,5 gaps are still iterated
+  if (nindex_to_node() == nullptr) {
+    return false;
+  }
+
   for (int node: *nindex_to_node()) {
     char nodepath[256];
     os::snprintf_checked(nodepath, sizeof(nodepath), SYS_DEVICES_NODE "/node%d", node);
@@ -2711,11 +2708,11 @@ bool os::Linux::print_numa_info(outputStream* st) {
     print_numa_memory_info(st, node);
     node_count++;
   }
-  os::closedir(dirp);
 
   if (node_count == 0) {
     return false;
   }
+
   st->print_cr("Total NUMA node count: %d", node_count);
   return true;
 }
