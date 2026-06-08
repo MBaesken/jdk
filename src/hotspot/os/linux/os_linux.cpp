@@ -2768,12 +2768,16 @@ void os::pd_print_cpu_info(outputStream* st, char* buf, size_t buflen) {
 // hwm (high water mark) in K for the VM RSS
 static long jfr_rss_hwm_k = -1;
 
+static void send_resident_set_size_event(ssize_t size, ssize_t peak) {
+  EventResidentSetSize event;
+  event.set_size(size * K);
+  event.set_peak(peak * K);
+  event.commit();
+}
+
 void os::jfr_report_memory_info() {
   os::Linux::accurate_meminfo_t accurate_info;
   if (os::Linux::query_accurate_process_memory_info(&accurate_info) && accurate_info.rss != -1) {
-    EventResidentSetSize event;
-    event.set_size(accurate_info.rss * K);
-
     // unfortunately the smaps_rollup/accurate_info contains no hwm (high water mark) for RSS
     struct rusage ru;
     if (getrusage(RUSAGE_SELF, &ru) == 0) {
@@ -2787,19 +2791,13 @@ void os::jfr_report_memory_info() {
       jfr_rss_hwm_k = accurate_info.rss;
     }
 
-    event.set_peak(jfr_rss_hwm_k * K);
-
-    event.commit();
+    send_resident_set_size_event(accurate_info.rss, jfr_rss_hwm_k);
     return;
   }
 
   os::Linux::meminfo_t info;
   if (os::Linux::query_process_memory_info(&info)) {
-    // Send the RSS JFR event
-    EventResidentSetSize event;
-    event.set_size(info.vmrss * K);
-    event.set_peak(info.vmhwm * K);
-    event.commit();
+    send_resident_set_size_event(info.vmrss, info.vmhwm);
   } else {
     // Log a warning
     static bool first_warning = true;
