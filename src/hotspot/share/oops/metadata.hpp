@@ -34,6 +34,8 @@ class Metadata : public MetaspaceObj {
   // Debugging hook to check that the metadata has not been deleted.
   NOT_PRODUCT(int _valid;)
  public:
+  NOT_PRODUCT(Metadata() : _valid(0) {})
+
   // We have to keep the vtable alive under LTGC dead-section removal/LTO
   // for serviceability tests to work.
   // This can be done by linker settings or modifications to the Metadata class.
