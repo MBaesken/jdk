@@ -48,13 +48,8 @@
 #if defined(__linux__) || defined(_ALLBSD_SOURCE)
 static const char *ZONEINFO_DIR = "/usr/share/zoneinfo";
 static const char *DEFAULT_ZONEINFO_FILE = "/etc/localtime";
-#else
-static const char *SYS_INIT_FILE = "/etc/default/init";
-static const char *ZONEINFO_DIR = "/usr/share/lib/zoneinfo";
-static const char *DEFAULT_ZONEINFO_FILE = "/usr/share/lib/zoneinfo/localtime";
-#endif /* defined(__linux__) || defined(_ALLBSD_SOURCE) */
-
 static const char popularZones[][4] = {"UTC", "GMT"};
+#endif /* defined(__linux__) || defined(_ALLBSD_SOURCE) */
 
 #if defined(__linux__) || defined(MACOSX)
 static char *isFileIdentical(char* buf, size_t size, char *pathname);
@@ -542,7 +537,6 @@ char *
 getGMTOffsetID()
 {
     char buf[32];
-    char offset[6];
     struct tm localtm;
     time_t clock = time(NULL);
     if (localtime_r(&clock, &localtm) == NULL) {
@@ -576,6 +570,7 @@ getGMTOffsetID()
     snprintf(buf, sizeof(buf), (const char *)"GMT%c%02.2d:%02.2d",
             gmt_off < 0 ? '-' : '+' , abs(gmt_off / 60), gmt_off % 60);
 #else
+    char offset[6];
     if (strftime(offset, 6, "%z", &localtm) != 5) {
         return strdup("GMT");
     }
