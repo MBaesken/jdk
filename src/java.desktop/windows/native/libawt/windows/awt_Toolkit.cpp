@@ -2848,33 +2848,6 @@ Java_sun_awt_windows_WToolkit_isDynamicLayoutSupportedNative(JNIEnv *env,
     CATCH_BAD_ALLOC_RET(FALSE);
 }
 
-/*
- * Class:     sun_awt_windows_WToolkit
- * Method:    printWindowsVersion
- * Signature: ()Ljava/lang/String;
- */
-JNIEXPORT jstring JNICALL
-Java_sun_awt_windows_WToolkit_getWindowsVersion(JNIEnv *env, jclass cls)
-{
-    TRY;
-
-    WCHAR szVer[128];
-
-    DWORD version = ::GetVersion();
-    swprintf(szVer, 128, L"0x%x = %ld", version, version);
-    int l = lstrlen(szVer);
-
-    if (IS_WINVISTA) {
-        swprintf(szVer + l, 128, L" (Windows Vista)");
-    } else {
-        swprintf(szVer + l, 128, L" (Windows XP)");
-    }
-
-    return JNU_NewStringPlatform(env, szVer);
-
-    CATCH_BAD_ALLOC_RET(NULL);
-}
-
 JNIEXPORT void JNICALL
 Java_sun_awt_windows_WToolkit_showTouchKeyboard(JNIEnv *env, jobject self,
     jboolean causedByTouchEvent)
