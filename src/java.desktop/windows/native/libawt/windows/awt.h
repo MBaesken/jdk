@@ -155,10 +155,8 @@ typedef AwtObject* PDATA;
 /*  /NEW JNI */
 
 /*
- * IS_WINXP returns TRUE on XP and Vista
  * IS_WINVISTA returns TRUE on Vista
  */
-#define IS_WINXP ((HIBYTE(LOWORD(::GetVersion())) >= 1) || LOBYTE(LOWORD(::GetVersion())) > 5)
 #define IS_WINVISTA (LOBYTE(LOWORD(::GetVersion())) >= 6)
 #define IS_WIN8 (                                                              \
     (IS_WINVISTA && (HIBYTE(LOWORD(::GetVersion())) >= 2)) ||                  \

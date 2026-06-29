@@ -2864,14 +2864,10 @@ Java_sun_awt_windows_WToolkit_getWindowsVersion(JNIEnv *env, jclass cls)
     swprintf(szVer, 128, L"0x%x = %ld", version, version);
     int l = lstrlen(szVer);
 
-    if (IS_WINXP) {
-        if (IS_WINVISTA) {
-            swprintf(szVer + l, 128, L" (Windows Vista)");
-        } else {
-            swprintf(szVer + l, 128, L" (Windows XP)");
-        }
+    if (IS_WINVISTA) {
+        swprintf(szVer + l, 128, L" (Windows Vista)");
     } else {
-        swprintf(szVer + l, 128, L" (Windows 2000)");
+        swprintf(szVer + l, 128, L" (Windows XP)");
     }
 
     return JNU_NewStringPlatform(env, szVer);

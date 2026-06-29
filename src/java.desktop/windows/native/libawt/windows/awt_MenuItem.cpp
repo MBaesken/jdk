@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1996, 2023, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1996, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -376,7 +376,7 @@ AwtMenuItem::DrawSelf(DRAWITEMSTRUCT& drawInfo)
 #define COLOR_MENUBAR 30
 #endif
         // Set background and text colors for unselected item
-        if (IS_WINXP && IsTopMenu() && AwtDesktopProperties::IsXPStyle()) {
+        if (IsTopMenu() && AwtDesktopProperties::IsXPStyle()) {
             crBack = ::GetSysColor (COLOR_MENUBAR);
         } else {
             crBack = ::GetSysColor (COLOR_MENU);
