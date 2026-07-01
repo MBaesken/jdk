@@ -369,12 +369,6 @@ AwtMenuItem::DrawSelf(DRAWITEMSTRUCT& drawInfo)
         // Disabled text must be drawn in gray.
         crText = ::GetSysColor(bEnabled? COLOR_HIGHLIGHTTEXT : COLOR_GRAYTEXT);
     } else {
-        // COLOR_MENUBAR is only defined on WindowsXP. Our binaries are
-        // built on NT, hence the below ifdef.
-
-#ifndef COLOR_MENUBAR
-#define COLOR_MENUBAR 30
-#endif
         // Set background and text colors for unselected item
         if (IsTopMenu() && AwtDesktopProperties::IsXPStyle()) {
             crBack = ::GetSysColor (COLOR_MENUBAR);

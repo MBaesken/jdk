@@ -503,9 +503,6 @@ void AwtDesktopProperties::GetColorParameters() {
     SetColorProperty(TEXT("win.mdi.backgroundColor"), GetSysColor(COLOR_APPWORKSPACE));
     SetColorProperty(TEXT("win.menu.backgroundColor"), GetSysColor(COLOR_MENU));
     SetColorProperty(TEXT("win.menu.textColor"), GetSysColor(COLOR_MENUTEXT));
-#ifndef COLOR_MENUBAR
-#define COLOR_MENUBAR 30
-#endif
     SetColorProperty(TEXT("win.menubar.backgroundColor"), GetSysColor(COLOR_MENUBAR));
     SetColorProperty(TEXT("win.scrollbar.backgroundColor"), GetSysColor(COLOR_SCROLLBAR));
     SetColorProperty(TEXT("win.text.grayedTextColor"), GetSysColor(COLOR_GRAYTEXT));
