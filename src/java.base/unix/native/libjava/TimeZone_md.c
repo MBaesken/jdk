@@ -41,17 +41,11 @@
 #include "TimeZone_md.h"
 #include "path_util.h"
 
-#define fileopen        fopen
-#define filegets        fgets
-#define fileclose       fclose
-
-#if defined(__linux__) || defined(_ALLBSD_SOURCE)
+#if defined(__linux__) || defined(MACOSX)
 static const char *ZONEINFO_DIR = "/usr/share/zoneinfo";
 static const char *DEFAULT_ZONEINFO_FILE = "/etc/localtime";
 static const char popularZones[][4] = {"UTC", "GMT"};
-#endif /* defined(__linux__) || defined(_ALLBSD_SOURCE) */
 
-#if defined(__linux__) || defined(MACOSX)
 static char *isFileIdentical(char* buf, size_t size, char *pathname);
 
 /*
@@ -116,7 +110,7 @@ getPathName(const char *dir, const char *name) {
 /*
  * Scans the specified directory and its subdirectories to find a
  * zoneinfo file which has the same content as /etc/localtime on Linux
- * or /usr/share/lib/zoneinfo/localtime on Solaris given in 'buf'.
+ * given in 'buf'.
  * If file is symbolic link, then the contents it points to are in buf.
  * Returns a zone ID if found, otherwise, NULL is returned.
  */
