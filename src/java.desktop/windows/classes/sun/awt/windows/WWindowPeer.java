@@ -738,7 +738,7 @@ public class WWindowPeer extends WPanelPeer implements WindowPeer,
             }
         }
 
-        // On Vista: setting the window non-opaque makes the window look
+        // Since Vista: setting the window non-opaque makes the window look
         // rectangular, though still catching the mouse clicks within
         // its shape only. To restore the correct visual appearance
         // of the window (i.e. w/ the correct shape) we have to reset
