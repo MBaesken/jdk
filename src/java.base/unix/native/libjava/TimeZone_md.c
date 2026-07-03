@@ -464,7 +464,7 @@ tzerr:
     return javatz;
 }
 
-#endif /* defined(_AIX) */
+#endif /* defined(__linux__) || defined(MACOSX) || defined(_AIX) */
 
 /*
  * findJavaTZ_md() maps platform time zone ID to Java time zone ID
