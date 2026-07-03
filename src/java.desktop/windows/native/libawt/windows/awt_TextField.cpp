@@ -55,7 +55,7 @@ void AwtTextField::EditSetSel(CHARRANGE &cr) {
     SendMessage(EM_EXSETSEL, 0, reinterpret_cast<LPARAM>(&cr));
 
     // 6417581: force expected drawing
-    if (IS_WINVISTA && cr.cpMin == cr.cpMax) {
+    if (cr.cpMin == cr.cpMax) {
         ::InvalidateRect(GetHWnd(), NULL, TRUE);
     }
 

@@ -88,8 +88,7 @@ void GetFlagValues(JNIEnv *env, jclass wFlagsClass)
     }
     useD3D = d3dEnabled;
     forceD3DUsage = d3dSet;
-    setHighDPIAware =
-        (IS_WINVISTA && GetStaticBoolean(env, wFlagsClass, "setHighDPIAware"));
+    setHighDPIAware = GetStaticBoolean(env, wFlagsClass, "setHighDPIAware");
     JNU_CHECK_EXCEPTION(env);
 
     J2dTraceLn(J2D_TRACE_INFO, "WindowsFlags (native):");

@@ -78,7 +78,7 @@ void AwtTextArea::EditSetSel(CHARRANGE &cr) {
     SendMessage(EM_EXSETSEL, 0, reinterpret_cast<LPARAM>(&cr));
     SendMessage(EM_HIDESELECTION, TRUE, TRUE);
     // 6417581: force expected drawing
-    if (IS_WINVISTA && cr.cpMin == cr.cpMax) {
+    if (cr.cpMin == cr.cpMax) {
         ::InvalidateRect(GetHWnd(), NULL, TRUE);
     }
 }
