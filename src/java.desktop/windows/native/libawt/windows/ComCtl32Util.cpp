@@ -47,12 +47,12 @@ WNDPROC ComCtl32Util::SubclassHWND(HWND hwnd, WNDPROC _WindowProc) {
     return NULL;
 }
 
-void ComCtl32Util::UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc, WNDPROC _DefWindowProc) {
+void ComCtl32Util::UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc) {
     const SUBCLASSPROC p = SharedWindowProc; // let compiler check type of SharedWindowProc
     ::RemoveWindowSubclass(hwnd, p, (UINT_PTR)_WindowProc); // _WindowProc is used as subclass ID
 }
 
-LRESULT ComCtl32Util::DefWindowProc(WNDPROC _DefWindowProc, HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT ComCtl32Util::DefWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     return ::DefSubclassProc(hwnd, msg, wParam, lParam);
 }
 

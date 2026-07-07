@@ -111,9 +111,7 @@ LRESULT CALLBACK FileDialogWndProc(HWND hWnd, UINT message,
             return 0;
         }
     }
-
-    WNDPROC lpfnWndProc = (WNDPROC)(::GetProp(hWnd, NativeDialogWndProcProp));
-    return ComCtl32Util::GetInstance().DefWindowProc(lpfnWndProc, hWnd, message, wParam, lParam);
+    return ComCtl32Util::GetInstance().DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 static UINT_PTR CALLBACK
@@ -167,10 +165,7 @@ FileDialogHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
                 ::ImmReleaseContext(hdlg, hIMC);
             }
 
-            WNDPROC lpfnWndProc = (WNDPROC)(::GetProp(parent, NativeDialogWndProcProp));
-            ComCtl32Util::GetInstance().UnsubclassHWND(parent,
-                                                       FileDialogWndProc,
-                                                       lpfnWndProc);
+            ComCtl32Util::GetInstance().UnsubclassHWND(parent, FileDialogWndProc);
             ::RemoveProp(parent, ModalDialogPeerProp);
             ::RemoveProp(parent, NativeDialogWndProcProp);
             ::RemoveProp(parent, OpenFileNameProp);

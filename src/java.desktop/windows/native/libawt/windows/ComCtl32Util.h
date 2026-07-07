@@ -46,9 +46,9 @@ class ComCtl32Util
 
         WNDPROC SubclassHWND(HWND hwnd, WNDPROC _WindowProc);
         // DefWindowProc is the same as returned from SubclassHWND
-        void UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc, WNDPROC _DefWindowProc);
+        void UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc);
         // DefWindowProc is the same as returned from SubclassHWND or NULL
-        LRESULT DefWindowProc(WNDPROC _DefWindowProc, HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+        LRESULT DefWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     private:
         ComCtl32Util();
