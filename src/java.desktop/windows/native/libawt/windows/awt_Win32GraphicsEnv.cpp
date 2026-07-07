@@ -93,7 +93,6 @@ void DWMResetCompositionEnabled() {
  * Returns true if dwm composition is enabled, false if dwm composition is disabled.
  */
 BOOL DWMIsCompositionEnabled() {
-    // cheaper to check than whether it's vista or not
     if (dwmIsCompositionEnabled != DWM_COMP_UNDEFINED) {
         return (BOOL)dwmIsCompositionEnabled;
     }
