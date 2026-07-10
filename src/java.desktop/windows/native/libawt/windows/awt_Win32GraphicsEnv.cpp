@@ -90,12 +90,13 @@ void DWMResetCompositionEnabled() {
 }
 
 /**
- * Returns true if dwm composition is enabled, false if dwm composition is disabled.
+ * Returns true if DWM composition is enabled, false if DWM composition is disabled.
  */
 BOOL DWMIsCompositionEnabled() {
     if (dwmIsCompositionEnabled != DWM_COMP_UNDEFINED) {
         return (BOOL)dwmIsCompositionEnabled;
     }
+
     BOOL bRes = FALSE;
 
     try {
