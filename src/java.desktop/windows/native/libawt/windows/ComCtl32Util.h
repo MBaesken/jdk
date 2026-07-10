@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2008, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -47,7 +47,6 @@ class ComCtl32Util
         WNDPROC SubclassHWND(HWND hwnd, WNDPROC _WindowProc);
         // DefWindowProc is the same as returned from SubclassHWND
         void UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc);
-        // DefWindowProc is the same as returned from SubclassHWND or NULL
         LRESULT DefWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     private:
