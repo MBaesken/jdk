@@ -152,8 +152,6 @@ FileDialogHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
             // subclass dialog's parent to receive additional messages
             WNDPROC lpfnWndProc = ComCtl32Util::GetInstance().SubclassHWND(parent,
                                                                            FileDialogWndProc);
-            ::SetProp(parent, NativeDialogWndProcProp, reinterpret_cast<HANDLE>(lpfnWndProc));
-
             ::SetProp(parent, OpenFileNameProp, (void *)lParam);
 
             break;
@@ -167,7 +165,6 @@ FileDialogHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
 
             ComCtl32Util::GetInstance().UnsubclassHWND(parent, FileDialogWndProc);
             ::RemoveProp(parent, ModalDialogPeerProp);
-            ::RemoveProp(parent, NativeDialogWndProcProp);
             ::RemoveProp(parent, OpenFileNameProp);
             break;
         }
