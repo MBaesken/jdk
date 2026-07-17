@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011, 2025, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2011, 2026, Oracle and/or its affiliates. All rights reserved.
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 #
 # This code is free software; you can redistribute it and/or modify it
@@ -37,6 +37,7 @@ $(call FillFindCache, $(wildcard $(TOPDIR)/src/java.desktop/*/native))
 include lib/AwtLibraries.gmk
 include lib/ClientLibraries.gmk
 
+ifeq ($(ENABLE_JSOUND), true)
 ifeq ($(call isTargetOs, aix), false)
   ##############################################################################
   # Build libjsound
@@ -80,6 +81,7 @@ ifeq ($(call isTargetOs, aix), false)
   ))
 
   TARGETS += $(BUILD_LIBJSOUND)
+endif
 endif
 
 ifeq ($(call isTargetOs, macosx), true)
