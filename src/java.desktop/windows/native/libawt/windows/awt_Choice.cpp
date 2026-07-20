@@ -89,7 +89,6 @@ namespace {
 
 AwtChoice::AwtChoice() {
     m_hList = NULL;
-    m_listDefWindowProc = NULL;
 }
 
 LPCTSTR AwtChoice::GetClassName() {
@@ -449,7 +448,7 @@ MsgRouting AwtChoice::WmNotify(UINT notifyCode)
             cbi.cbSize = sizeof(COMBOBOXINFO);
             ::GetComboBoxInfo(GetHWnd(), &cbi);
             m_hList = cbi.hwndList;
-            m_listDefWindowProc = ComCtl32Util::GetInstance().SubclassHWND(m_hList, ListWindowProc);
+            ComCtl32Util::GetInstance().SubclassHWND(m_hList, ListWindowProc);
             DASSERT(::GetWindowLongPtr(m_hList, GWLP_USERDATA) == NULL);
             ::SetWindowLongPtr(m_hList, GWLP_USERDATA, (LONG_PTR)this);
         }
