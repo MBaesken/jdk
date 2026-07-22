@@ -3237,8 +3237,7 @@ static UINT CALLBACK pageDlgHook(HWND hDlg, UINT msg,
             }
 
             // subclass dialog's parent to receive additional messages
-            WNDPROC lpfnWndProc = ComCtl32Util::GetInstance().SubclassHWND(hDlg,
-                                                                           PageDialogWndProc);
+            ComCtl32Util::GetInstance().SubclassHWND(hDlg, PageDialogWndProc);
             break;
         }
         case WM_DESTROY: {

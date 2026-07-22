@@ -150,8 +150,7 @@ FileDialogHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
             }
 
             // subclass dialog's parent to receive additional messages
-            WNDPROC lpfnWndProc = ComCtl32Util::GetInstance().SubclassHWND(parent,
-                                                                           FileDialogWndProc);
+            ComCtl32Util::GetInstance().SubclassHWND(parent, FileDialogWndProc);
             ::SetProp(parent, OpenFileNameProp, (void *)lParam);
 
             break;
