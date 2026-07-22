@@ -41,10 +41,9 @@ void ComCtl32Util::InitLibraries() {
     m_bToolTipControlInitialized = ::InitCommonControlsEx(&iccex);
 }
 
-WNDPROC ComCtl32Util::SubclassHWND(HWND hwnd, WNDPROC _WindowProc) {
+void ComCtl32Util::SubclassHWND(HWND hwnd, WNDPROC _WindowProc) {
     const SUBCLASSPROC p = SharedWindowProc; // let compiler check type of SharedWindowProc
     ::SetWindowSubclass(hwnd, p, (UINT_PTR)_WindowProc, NULL); // _WindowProc is used as subclass ID
-    return NULL;
 }
 
 void ComCtl32Util::UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc) {

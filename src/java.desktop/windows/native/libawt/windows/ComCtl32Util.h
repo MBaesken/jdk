@@ -44,7 +44,7 @@ class ComCtl32Util
             return m_bToolTipControlInitialized;
         }
 
-        WNDPROC SubclassHWND(HWND hwnd, WNDPROC _WindowProc);
+        void SubclassHWND(HWND hwnd, WNDPROC _WindowProc);
         void UnsubclassHWND(HWND hwnd, WNDPROC _WindowProc);
         LRESULT DefWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

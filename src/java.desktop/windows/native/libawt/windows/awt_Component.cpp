@@ -682,7 +682,8 @@ void AwtComponent::SubclassHWND()
         return;
     }
     const WNDPROC wndproc = WndProc; // let compiler type check WndProc
-    m_DefWindowProc = ComCtl32Util::GetInstance().SubclassHWND(GetHWnd(), wndproc);
+    ComCtl32Util::GetInstance().SubclassHWND(GetHWnd(), wndproc);
+    m_DefWindowProc = NULL;
     m_bSubclassed = TRUE;
 }
 
