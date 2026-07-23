@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003, 2024, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003, 2026, Oracle and/or its affiliates. All rights reserved.
  */
 
 /* Copyright  (c) 2002 Graz University of Technology. All rights reserved.
@@ -79,10 +79,11 @@ JNIEXPORT jobject JNICALL Java_sun_security_pkcs11_wrapper_PKCS11_connect
     jstring jGetFunctionList)
 {
     HINSTANCE hModule;
-    int i = 0;
+#ifdef DEBUG
     CK_ULONG ulCount = 0;
     CK_C_GetInterfaceList C_GetInterfaceList = NULL;
     CK_INTERFACE_PTR iList = NULL;
+#endif
     CK_C_GetInterface C_GetInterface = NULL;
     CK_INTERFACE_PTR interface = NULL;
     CK_C_GetFunctionList C_GetFunctionList = NULL;
@@ -139,7 +140,7 @@ JNIEXPORT jobject JNICALL Java_sun_security_pkcs11_wrapper_PKCS11_connect
             iList = (CK_INTERFACE_PTR)
                     malloc(ulCount*sizeof(CK_INTERFACE));
             rv = C_GetInterfaceList(iList, &ulCount);
-            for (i=0; i < (int)ulCount; i++) {
+            for (int i=0; i < (int)ulCount; i++) {
                 printf("interface %s version %d.%d funcs %p flags 0x%lu\n",
                         iList[i].pInterfaceName,
                         ((CK_VERSION *)iList[i].pFunctionList)->major,
