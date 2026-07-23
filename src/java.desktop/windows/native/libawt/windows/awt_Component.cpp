@@ -229,7 +229,6 @@ AwtComponent::AwtComponent()
     m_backgroundColorSet = FALSE;
     m_penForeground = NULL;
     m_brushBackground = NULL;
-    m_DefWindowProc = NULL;
     m_nextControlID = 1;
     m_childList = NULL;
     m_myControlID = 0;
@@ -683,7 +682,6 @@ void AwtComponent::SubclassHWND()
     }
     const WNDPROC wndproc = WndProc; // let compiler type check WndProc
     ComCtl32Util::GetInstance().SubclassHWND(GetHWnd(), wndproc);
-    m_DefWindowProc = NULL;
     m_bSubclassed = TRUE;
 }
 
